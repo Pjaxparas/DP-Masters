@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DP Masters | Secure Protocol</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root { --black: #050505; --dark-grey: #121212; --crimson: #bc0000; --text-dim: #888; --text-bright: #fff; }
+        body { background-color: var(--black); color: var(--text-bright); font-family: 'Inter', sans-serif; margin: 0; }
+        .hidden-section { display: none !important; }
+        
+        #form-section, #payment-section { display: none; min-height: 100vh; justify-content: center; align-items: center; padding: 20px; box-sizing: border-box; }
+        
+        .checkout-container { background: var(--dark-grey); padding: 40px; border-radius: 4px; border: 1px solid #222; width: 100%; max-width: 450px; text-align: center; }
+        .badge { color: var(--crimson); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; display: block; margin-bottom: 10px; }
+        h2 { font-size: 28px; margin: 0 0 10px 0; font-weight: 900; }
+        
+        .form-group { margin-bottom: 20px; text-align: left; }
+        label { display: block; font-size: 11px; color: var(--text-dim); margin-bottom: 8px; text-transform: uppercase; }
+        input, textarea { width: 100%; padding: 15px; background: #000; border: 1px solid #333; color: white; border-radius: 4px; font-size: 14px; box-sizing: border-box; }
+        input:focus { border-color: var(--crimson); outline: none; }
+
+        .btn-buy { background: var(--crimson); color: white; border: none; width: 100%; padding: 18px; font-weight: 700; cursor: pointer; text-transform: uppercase; margin-top: 10px; transition: 0.3s; }
+        .btn-buy:disabled { background: #444; cursor: not-allowed; }
+
+        .timer { color: var(--crimson); font-size: 24px; font-weight: 900; margin: 10px 0; }
+        .qr-white { background: white; padding: 10px; display: inline-block; border-radius: 4px; margin-top: 15px; }
+    </style>
+</head>
+<body>
+
+    <div id="landing-page">
+        <header class="hero" style="text-align:center; padding:100px 5%;">
+            <h1>Command Your <br><span style="color:var(--crimson)">Environment.</span></h1>
+            <p style="color:var(--text-dim); margin-bottom: 30px;">The definitive breakdown of human behavior.</p>
+            <button class="btn-buy" onclick="showForm()" style="max-width:300px;">Unlock Protocol</button>
+        </header>
+    </div>
+    <div id="product-info-section" class="hidden-section">
+    <div style="padding: 60px 5%; max-width: 1000px; margin: auto; text-align: center;">
+        
+        <span class="badge">Technical Specs</span>
+        <h2 style="margin-bottom: 30px;">Protocol Intelligence</h2>
+        <p style="color: var(--crimson); font-size: 13px; font-weight: 700; margin-top: -15px; margin-bottom: 40px; text-transform: uppercase; letter-spacing: 1px;">
+    ⚠️ HIGHLY SENSITIVE CONTENT: PDF FILES ACCESSIBLE IN TEST MODE ONLY.
+</p>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; text-align: left; margin-bottom: 50px;">
+            <div style="background: var(--dark-grey); padding: 25px; border-left: 3px solid var(--crimson);">
+                <h4 style="margin: 0 0 10px 0; color: var(--crimson);">Data Encryption</h4>
+                <p style="font-size: 14px; color: var(--text-dim);">End-to-end proprietary environment mapping for secure operations.</p>
+            </div>
+            <div style="background: var(--dark-grey); padding: 25px; border-left: 3px solid var(--crimson);">
+                <h4 style="margin: 0 0 10px 0; color: var(--crimson);">Signal Analysis</h4>
+                <p style="font-size: 14px; color: var(--text-dim);">Real-time behavior tracking using advanced social heuristics.</p>
+            </div>
+            <div style="background: var(--dark-grey); padding: 25px; border-left: 3px solid var(--crimson);">
+                <h4 style="margin: 0 0 10px 0; color: var(--crimson);">Neural Mapping</h4>
+                <p style="font-size: 14px; color: var(--text-dim);">Detailed blueprints of environmental triggers and responses.</p>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-bottom: 40px;">
+            <button class="btn-buy" onclick="goToForm()" style="max-width: 300px; box-shadow: 0 0 20px rgba(188, 0, 0, 0.4);">
+                Start Your Trial At Rs 39
+            </button>
+            <p style="font-size: 11px; color: var(--crimson); margin-top: 10px; letter-spacing: 1px; font-weight: 700;">
+                LIMITED ACCESS AVAILABLE
+            </p>
+        </div>
+
+        <div style="background: #000; border: 2px dashed #333; padding: 80px 20px; position: relative; border-radius: 8px; margin-bottom: 40px; text-align: center;">
+            <div style="font-size: 40px; margin-bottom: 15px;">🔒</div>
+            <h3 style="margin: 0;">VIDEO CONTENT ENCRYPTED</h3>
+            <p style="color: var(--text-dim);">Full briefing available after protocol authorization.</p>
+        </div>
+    </div>
+
+    <footer style="background: #000; padding: 50px 5% 20px; border-top: 1px solid #1a1a1a; margin-top: 100px;">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 30px; text-align: left;">
+            <div style="flex: 1; min-width: 200px;">
+                <h3 style="color: var(--crimson); font-weight: 900;">DP MASTERS</h3>
+                <p style="font-size: 12px; color: var(--text-dim);">Precision. Power. Protocol.</p>
+            </div>
+            <div style="flex: 1; min-width: 150px;">
+                <h5 style="text-transform: uppercase; font-size: 11px; margin-bottom: 15px;">Resources</h5>
+                <ul style="list-style: none; padding: 0; font-size: 13px; color: var(--text-dim); line-height: 2;">
+                    <li><a href="https://instagram.com/your_handle" target="_blank" style="color: inherit; text-decoration: none;">Instagram</a></li>
+                    <li><a href="mailto:support@dpmasters.com" style="color: inherit; text-decoration: none;">Contact Support</a></li>
+                </ul>
+            </div>
+            <div style="flex: 1; min-width: 150px;">
+                <h5 style="text-transform: uppercase; font-size: 11px; margin-bottom: 15px;">Legal</h5>
+                <ul style="list-style: none; padding: 0; font-size: 13px; color: var(--text-dim); line-height: 2;">
+                    <li>
+    <a href="Terms%20and%20conditions%20.pdf#toolbar=0" target="_blank" style="color: inherit; text-decoration: none;">
+        Terms & Conditions
+    </a>
+</li>
+<li>
+    <a  href="privacy.pdf#toolbar=0" target="_blank" style="color: inherit; text-decoration: none;">
+        Privacy Protocol
+    </a>
+</li>
+                </ul>
+            </div>
+        </div>
+        <div style="border-top: 1px solid #111; margin-top: 40px; padding-top: 20px; font-size: 10px; color: #444; text-align: center;">
+            © 2026 DP MASTERS. ALL RIGHTS RESERVED.
+        </div>
+    </footer>
+</div>
+    <div id="form-section">
+        <div class="checkout-container">
+            <span class="badge">Authorization Required</span>
+            <h2>Personal Protocol</h2>
+            <div class="form-group"><label>Full Name</label><input type="text" id="custName" placeholder="Characters only"></div>
+            <div class="form-group"><label>Date of Birth</label><input type="date" id="custDOB"></div>
+            <div class="form-group"><label>Mobile</label><input type="tel" id="custPhone" placeholder="10 Digits"></div>
+            <div class="form-group"><label>Email</label><input type="email" id="custEmail" placeholder="name@email.com"></div>
+            <div class="form-group"><label>Address</label><textarea id="custAddress" rows="2" placeholder="Full Address"></textarea></div>
+            <button class="btn-buy" id="submitBtn" onclick="validateAndSave()">Authorize Payment →</button>
+        </div>
+    </div>
+
+    <div id="payment-section">
+        <div class="checkout-container">
+            <span class="badge">Secure Gateway</span>
+            <h2>UPI Authorization</h2>
+            <div class="qr-white">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=6264588307@ybl%26pn=DP_MASTERS%26am=299%26cu=INR">
+            </div>
+            <div class="timer" id="timer">05:00</div>
+            <input type="text" id="utr" placeholder="Enter 12-digit UTR Code" style="margin-top:15px;">
+            <button class="btn-buy" id="verifyBtn" onclick="verifyUTR()">Verify & Download</button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+        import { getFirestore, doc, setDoc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-analytics.js";
+
+        // Your exact Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAMSB5uI1rY2zEOGTtJN_jgfInPMNm02aA",
+            authDomain: "dp-masters.firebaseapp.com",
+            projectId: "dp-masters",
+            storageBucket: "dp-masters.firebasestorage.app",
+            messagingSenderId: "79554677960",
+            appId: "1:79554677960:web:8766e1485da4bec2b729fd",
+            measurementId: "G-TLS4NQCE6Q"
+        };
+
+        // Initialize
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const analytics = getAnalytics(app);
+        let userDocId = ""; 
+
+        // --- SHOW FORM ---
+        window.showForm = () => {
+    // Landing page ko chhupao
+    document.getElementById('landing-page').style.display = 'none';
+    
+    // Product section ko dikhao (uski hidden class hata kar)
+    const productSection = document.getElementById('product-info-section');
+    if(productSection) {
+        productSection.classList.remove('hidden-section');
+        window.scrollTo(0,0);
+    } else {
+        console.log("Error: product-info-section nahi mila!");
+    }
+};
+    window.goToForm = () => {
+    // 1. Product Info section ko hide karo
+    const productSec = document.getElementById('product-info-section');
+    if(productSec) {
+        productSec.classList.add('hidden-section');
+    }
+
+    // 2. Asli Form section ko dikhao
+    const formSec = document.getElementById('form-section');
+    if(formSec) {
+        formSec.style.display = 'flex'; // Form ko center karne ke liye flex use karein
+    }
+
+    // 3. Page ko upar scroll karo
+    window.scrollTo(0,0);
+};
+        // --- VALIDATE & SAVE ---
+        window.validateAndSave = async () => {
+            const name = document.getElementById('custName').value;
+            const dob = document.getElementById('custDOB').value;
+            const phone = document.getElementById('custPhone').value;
+            const email = document.getElementById('custEmail').value;
+            const address = document.getElementById('custAddress').value;
+            const btn = document.getElementById('submitBtn');
+
+            // Validations
+            if (!/^[a-zA-Z\s]+$/.test(name)) { alert("Invalid Name: Letters only."); return; }
+            if (!/^[0-9]{10}$/.test(phone)) { alert("Invalid Phone: 10 digits required."); return; }
+            if (!email.includes('@')) { alert("Invalid Email address."); return; }
+            
+            const age = Math.floor((new Date() - new Date(dob)) / 31557600000);
+            if (age < 18) { alert("Unauthorized: Must be 18+"); return; }
+
+            btn.disabled = true;
+            btn.innerText = "Processing...";
+
+            // Document ID based on email + timestamp
+            userDocId = email.replace(/[^a-zA-Z0-9]/g, "") + "_" + Date.now();
+            
+            try {
+                await setDoc(doc(db, "leads", userDocId), {
+                    name, dob, phone, email, address,
+                    status: "PENDING_PAYMENT",
+                    timestamp: serverTimestamp()
+                });
+                
+                document.getElementById('form-section').style.display = 'none';
+                document.getElementById('payment-section').style.display = 'flex';
+                startTimer(300);
+            } catch (e) {
+                alert("Database Error. Check Firestore Rules.");
+                console.error(e);
+                btn.disabled = false;
+                btn.innerText = "Authorize Payment →";
+            }
+        };
+
+        // --- VERIFY UTR ---
+        window.verifyUTR = async () => {
+    const utrInput = document.getElementById('utr').value.trim();
+    const vBtn = document.getElementById('verifyBtn');
+
+    // REGEX LOGIC:
+    // ^ = Shuruat se
+    // [0-9] = Sirf numbers allow hain
+    // {12} = Exact 12 digits hone chahiye
+    // $ = Khatam hone tak
+    const utrPattern = /^[0-9]{12}$/;
+
+    if (!utrPattern.test(utrInput)) {
+        alert("ACCESS DENIED: Enter a valid 12-digit numeric UTR Code (Numbers only).");
+        return;
+    }
+
+    // Agar 12 digits hain, toh aage badho
+    vBtn.disabled = true;
+    vBtn.innerText = "Verifying...";
+
+    try {
+        await updateDoc(doc(db, "leads", userDocId), {
+            utr: utrInput,
+            status: "UTR_SUBMITTED",
+            updatedAt: serverTimestamp()
+        });
+        
+        window.location.href = "/success.html";
+    } catch (e) {
+        alert("Connection Error. Could not update payment.");
+        vBtn.disabled = false;
+        vBtn.innerText = "Verify & Download";
+    }
+};
+
+        function startTimer(t) {
+            let timer = t, m, s;
+            const display = document.querySelector('#timer');
+            const interval = setInterval(() => {
+                m = Math.floor(timer / 60); s = timer % 60;
+                display.textContent = (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s;
+                if (--timer < 0) { 
+                    clearInterval(interval);
+                    display.textContent = "EXPIRED"; 
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
