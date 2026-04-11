@@ -21,6 +21,11 @@ app.get('/', (req, res) => {
 app.get('/checkout', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'checkout.html'));
 });
+// 4. Google Bot ke liye robots.txt route
+app.get('/robots.txt', (req, res) => {
+    res.type('text/plain');
+    res.send("User-agent: *\nDisallow:");
+});
 
 // Port settings for local & live
 const PORT = process.env.PORT || 3000;
