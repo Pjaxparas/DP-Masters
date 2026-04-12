@@ -29,12 +29,12 @@ app.get('/robots.txt', (req, res) => {
 
 // Sitemap route
 app.get('/sitemap.xml', (req, res) => {
-  res.sendFile(path.join(__dirname, 'sitemap.xml'));
+  res.sendFile(path.join(__dirname, '../sitemap.xml'));
 });
 
 // Robots.txt route
 app.get('/robots.txt', (req, res) => {
-  res.sendFile(path.join(__dirname, 'robots.txt'));
+  res.sendFile(path.join(__dirname, '../robots.txt'));
 });
 // Port settings for local & live
 const PORT = process.env.PORT || 3000;
