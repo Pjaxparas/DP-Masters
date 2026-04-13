@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Gateway</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <style>
+        :root { --primary: #000000; --accent: #2563eb; --bg: #ffffff; }
+        body { font-family: 'Inter', sans-serif; margin: 0; padding: 0; background: var(--bg); color: #1a1a1a; }
+        .container { max-width: 600px; margin: 0 auto; padding: 40px 20px; text-align: center; }
+        h1 { font-size: 3rem; font-weight: 800; letter-spacing: -2px; margin-bottom: 10px; text-transform: uppercase; }
+        .sub-header { font-size: 1.1rem; color: #666; margin-bottom: 50px; }
+        .section-title { text-align: left; font-weight: 700; font-size: 1.1rem; margin: 30px 0 15px 0; border-bottom: 1px solid #eee; padding-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .option-num { color: var(--accent); margin-right: 8px; }
+        .price-sticky { font-size: 1.5rem; font-weight: 800; color: var(--accent); }
+        .app-grid { display: flex; justify-content: space-around; margin: 30px 0; }
+        .app-item { display: flex; flex-direction: column; align-items: center; cursor: pointer; text-decoration: none; color: inherit; width: 80px; border:none; background:none; }
+        .circle-icon { width: 70px; height: 70px; border-radius: 50%; background: #fff; border: 1px solid #e2e8f0; display: flex; justify-content: center; align-items: center; margin-bottom: 10px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); transition: 0.3s; }
+        .circle-icon:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
+        .circle-icon img { width: 45px; height: 45px; object-fit: contain; }
+        .app-item span { font-size: 0.85rem; font-weight: 600; color: #475569; }
+        .upi-box { background: #f8fafc; padding: 20px; border-radius: 16px; display: flex; gap: 10px; border: 1px solid #e2e8f0; }
+        input[type="text"] { flex: 1; padding: 14px; border: 1px solid #cbd5e1; border-radius: 10px; font-size: 1rem; outline: none; }
+        input:focus { border-color: var(--accent); }
+        .pay-btn { background: var(--primary); color: white; padding: 0 25px; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; transition: 0.2s; }
+        .pay-btn:hover { background: #333; }
+        .list-option { display: flex; justify-content: space-between; align-items: center; padding: 22px; background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; margin-bottom: 12px; text-decoration: none; color: inherit; font-weight: 600; transition: 0.2s; cursor: pointer; }
+        .list-option:hover { border-color: var(--accent); background: #f0f7ff; }
+        .footer { margin-top: 60px; color: #94a3b8; font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>PAYMENT GATEWAY</h1>
+    <div class="sub-header">Choose your payment option to complete purchase</div>
+
+    <div class="section-title">
+        <span><span class="option-num">01.</span> UPI & Wallets</span>
+        <span class="price-sticky" id="amt">₹49</span>
+    </div>
+
+    <div class="app-grid">
+        <div class="app-item" onclick="startPayment()">
+            <div class="circle-icon">
+                <img src="https://img.icons8.com/color/48/phone-pe.png" alt="PhonePe">
+            </div>
+            <span>PhonePe</span>
+        </div>
+        <div class="app-item" onclick="startPayment()">
+            <div class="circle-icon">
+                <img src="https://img.icons8.com/color/48/google-pay-india.png" alt="GPay">
+            </div>
+            <span>GPay</span>
+        </div>
+        <div class="app-item" onclick="startPayment()">
+            <div class="circle-icon">
+                <img src="https://img.icons8.com/color/48/paytm.png" alt="Paytm">
+            </div>
+            <span>Paytm</span>
+        </div>
+    </div>
+
+    <div class="upi-box">
+        <input type="text" id="upi-id" placeholder="Enter UPI ID (e.g. name@apl)">
+        <button class="pay-btn" onclick="startPayment()">PAY NOW</button>
+    </div>
+
+    <div class="section-title">
+        <span><span class="option-num">02.</span> Cards</span>
+    </div>
+    <div onclick="startPayment()" class="list-option">
+        <span>Credit / Debit Card</span>
+        <span>→</span>
+    </div>
+
+    <div class="section-title">
+        <span><span class="option-num">03.</span> NetBanking</span>
+    </div>
+    <div onclick="startPayment()" class="list-option">
+        <span>All Indian Banks</span>
+        <span>→</span>
+    </div>
+
+    <div class="footer">
+        🔒 256-bit SSL Encrypted • Secure Transaction
+    </div>
+</div>
+
+<script>
+    // URL se amount lena (Default 49 agar URL mein nahi hai)
+    const params = new URLSearchParams(window.location.search);
+    const amountVal = params.get('amt') || "49"; 
+    document.getElementById('amt').innerText = "₹" + amountVal;
+
+    function startPayment() {
+        var options = {
+            "key": "rzp_live_ScxkGNuA9dLL4b", // <-- YAHAN APNI KEY DAALEIN
+            "amount": parseInt(amountVal) * 49, // Amount in paise
+            "currency": "INR",
+            "name": "DP MASTERS",
+            "description": "Payment for Service",
+            "image": "https://img.icons8.com/color/48/shield.png",
+            "handler": function (response){
+                // Success hone par action
+                alert("Payment Successful! ID: " + response.razorpay_payment_id);
+                window.location.href = "success.html"; 
+            },
+            "prefill": {
+                "vpa": document.getElementById('upi-id').value // UPI ID box se uthayega
+            },
+            "theme": { "color": "#2563eb" }
+        };
+        var rzp1 = new Razorpay(options);
+        rzp1.open();
+    }
+</script>
+
+</body>
+</html>

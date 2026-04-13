@@ -1,7 +1,8 @@
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
-require('dotenv').config();
+const Razorpay = require('razorpay');
+require('dotenv').config(); // Yeh .env file se keys read karne ke liye hai
 
 const app = express();
 
@@ -30,6 +31,26 @@ app.get('/robots.txt', (req, res) => {
 // Sitemap route
 app.get('/sitemap.xml', (req, res) => {
   res.sendFile(path.join(__dirname, '../sitemap.xml'));
+});
+const razorpay = new Razorpay({
+  key_id: process.env.RAZORPAY_KEY_ID,
+  key_secret: process.env.RAZORPAY_KEY_SECRET, // <--- Secret Key yahan use hoti hai
+});
+
+// Example: Order create karne ka endpoint
+app.post("/create-order", async (req, res) => {
+  const options = {
+    amount: 490, // amount in smallest currency unit (500 INR)
+    currency: "INR",
+    receipt: "order_rcptid_11"
+  };
+
+  try {
+    const order = await razorpay.orders.create(options);
+    res.json(order);
+  } catch (error) {
+    res.status(500).send(error);
+  }
 });
 
 // Robots.txt route
