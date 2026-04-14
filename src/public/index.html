@@ -124,18 +124,6 @@
         </div>
     </div>
 
-    <div id="payment-section">
-        <div class="checkout-container">
-            <span class="badge">Secure Gateway</span>
-            <h2>UPI Authorization</h2>
-            <div class="qr-white">
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=6264588307@ybl%26pn=DP_MASTERS%26am=49%26cu=INR">
-            </div>
-            <div class="timer" id="timer">05:00</div>
-            <input type="text" id="utr" placeholder="Enter 12-digit UTR Code" style="margin-top:15px;">
-            <button class="btn-buy" id="verifyBtn" onclick="verifyUTR()">Verify & Download</button>
-        </div>
-    </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
@@ -189,95 +177,67 @@
     // 3. Page ko upar scroll karo
     window.scrollTo(0,0);
 };
-        // --- VALIDATE & SAVE ---
         window.validateAndSave = async () => {
-            const name = document.getElementById('custName').value;
-            const dob = document.getElementById('custDOB').value;
-            const phone = document.getElementById('custPhone').value;
-            const email = document.getElementById('custEmail').value;
-            const address = document.getElementById('custAddress').value;
-            const btn = document.getElementById('submitBtn');
+    const name = document.getElementById('custName').value;
+    const dob = document.getElementById('custDOB').value;
+    const phone = document.getElementById('custPhone').value;
+    const email = document.getElementById('custEmail').value;
+    const address = document.getElementById('custAddress').value;
+    const btn = document.getElementById('submitBtn');
+  
 
-            // Validations
-            if (!/^[a-zA-Z\s]+$/.test(name)) { alert("Invalid Name: Letters only."); return; }
-            if (!/^[0-9]{10}$/.test(phone)) { alert("Invalid Phone: 10 digits required."); return; }
-            if (!email.includes('@')) { alert("Invalid Email address."); return; }
-            
-            const age = Math.floor((new Date() - new Date(dob)) / 31557600000);
-            if (age < 18) { alert("Unauthorized: Must be 18+"); return; }
-
-            btn.disabled = true;
-            btn.innerText = "Processing...";
-
-            // Document ID based on email + timestamp
-            userDocId = email.replace(/[^a-zA-Z0-9]/g, "") + "_" + Date.now();
-            
-            try {
-                await setDoc(doc(db, "leads", userDocId), {
-                    name, dob, phone, email, address,
-                    status: "PENDING_PAYMENT",
-                    timestamp: serverTimestamp()
-                });
-                
-                document.getElementById('form-section').style.display = 'none';
-                document.getElementById('payment-section').style.display = 'flex';
-                startTimer(300);
-            } catch (e) {
-                alert("Database Error. Check Firestore Rules.");
-                console.error(e);
-                btn.disabled = false;
-                btn.innerText = "Authorize Payment →";
-            }
-        };
-
-        // --- VERIFY UTR ---
-        window.verifyUTR = async () => {
-    const utrInput = document.getElementById('utr').value.trim();
-    const vBtn = document.getElementById('verifyBtn');
-
-    // REGEX LOGIC:
-    // ^ = Shuruat se
-    // [0-9] = Sirf numbers allow hain
-    // {12} = Exact 12 digits hone chahiye
-    // $ = Khatam hone tak
-    const utrPattern = /^[0-9]{12}$/;
-
-    if (!utrPattern.test(utrInput)) {
-        alert("ACCESS DENIED: Enter a valid 12-digit numeric UTR Code (Numbers only).");
-        return;
+    // --- POINT 1: Validation Improvements ---
+    if (!name || !dob || !phone || !email || !address) { 
+        alert("Please fill all fields protocol requires full data."); 
+        return; 
     }
+    if (!/^[a-zA-Z\s]+$/.test(name)) { alert("Invalid Name: Letters only."); return; }
+    if (!/^[0-9]{10}$/.test(phone)) { alert("Invalid Phone: 10 digits required."); return; }
+    if (!email.includes('@')) { alert("Invalid Email address."); return; }
+    
+    const age = Math.floor((new Date() - new Date(dob)) / 31557600000);
+    if (age < 18) { alert("Unauthorized: Must be 18+"); return; }
 
-    // Agar 12 digits hain, toh aage badho
-    vBtn.disabled = true;
-    vBtn.innerText = "Verifying...";
+    btn.disabled = true;
+    btn.innerText = "Authorizing...";
 
+    // Generate Document ID
+    userDocId = email.replace(/[^a-zA-Z0-9]/g, "") + "_" + Date.now();
+    
     try {
-        await updateDoc(doc(db, "leads", userDocId), {
-            utr: utrInput,
-            status: "UTR_SUBMITTED",
-            updatedAt: serverTimestamp()
+        // Firebase mein data save ho raha hai
+        await setDoc(doc(db, "leads", userDocId), {
+            name, dob, phone, email, address,
+            status: "PENDING_PAYMENT",
+            timestamp: serverTimestamp()
         });
         
-        window.location.href = "/success.html";
+        // --- POINT 2: Data Persistence ---
+        // Checkout page par details dikhane ke liye local storage use karein
+        localStorage.setItem('lastUserDocId', userDocId);
+        localStorage.setItem('custName', name);
+
+        // --- POINT 3: Redirection Logic ---
+        // Ab hum user ko checkout.html par bhejenge
+        window.location.href = "checkout.html"; 
+
     } catch (e) {
-        alert("Connection Error. Could not update payment.");
-        vBtn.disabled = false;
-        vBtn.innerText = "Verify & Download";
+        console.error("Error adding document: ", e);
+        alert("Submission failed. Please try again.");
+        btn.disabled = false;
+        btn.innerText = "Authorize Payment →";
     }
 };
 
-        function startTimer(t) {
-            let timer = t, m, s;
-            const display = document.querySelector('#timer');
-            const interval = setInterval(() => {
-                m = Math.floor(timer / 60); s = timer % 60;
-                display.textContent = (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s;
-                if (--timer < 0) { 
-                    clearInterval(interval);
-                    display.textContent = "EXPIRED"; 
-                }
-            }, 1000);
-        }
-    </script>
-</body>
-</html>
+        window.startTimer = (duration) => {
+    let timer = duration, minutes, seconds;
+    const display = document.querySelector('#timer-display'); // Make sure you have this ID in HTML
+    if(!display) return; 
+
+    setInterval(function () {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+        display.textContent = (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds < 10 ? "0" + seconds : seconds);
+        if (--timer < 0) timer = 0;
+    }, 1000);
+};

@@ -2,6 +2,8 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const Razorpay = require('razorpay');
+const { defineSecret } = require('firebase-functions/params');
+const razorpaySecret = defineSecret('RAZORPAY_KEY_SECRET');
 require('dotenv').config(); // Yeh .env file se keys read karne ke liye hai
 
 const app = express();

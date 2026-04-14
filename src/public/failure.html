@@ -1,17 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="../../Newsite/style.css">
-    <title>DP Masters | Authorization Failed</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Failed | DP MASTERS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root { --error: #ef4444; --primary: #000000; --bg: #ffffff; }
+        body { font-family: 'Inter', sans-serif; margin: 0; display: flex; align-items: center; justify-content: center; height: 100vh; background: var(--bg); text-align: center; }
+        .error-container { max-width: 400px; padding: 40px; border-radius: 24px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid #fecaca; }
+        .icon-circle { width: 80px; height: 80px; background: #fee2e2; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
+        h1 { font-size: 1.8rem; font-weight: 800; color: #1a1a1a; margin-bottom: 10px; }
+        p { color: #64748b; margin-bottom: 30px; line-height: 1.5; }
+        .retry-btn { display: inline-block; background: var(--primary); color: white; padding: 14px 30px; border-radius: 12px; text-decoration: none; font-weight: 700; transition: 0.3s; }
+        .retry-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .support-link { display: block; margin-top: 20px; color: #94a3b8; font-size: 0.85rem; text-decoration: none; }
+    </style>
 </head>
-<body style="background:var(--black); text-align:center; padding: 150px 5%;">
+<body>
 
-    <span class="badge" style="color:#d50000;">Authorization Denied</span>
-    <h1 style="font-size:48px; margin: 20px 0;">Unauthorized <br>Transaction.</h1>
+<div class="error-container">
+    <div class="icon-circle">
+        <img src="https://img.icons8.com/color/48/cancel--v1.png" alt="Failed">
+    </div>
+    <h1>Payment Failed</h1>
+    <p>Unfortunately, we couldn't process your transaction. This could be due to a technical error, timeout, or insufficient funds.</p>
     
-    <p style="color:var(--text-dim); margin-bottom:30px;">Payment authorization was unsuccessful. Please check your credentials or network and re-initiate.</p>
+    <a href="checkout.html" class="retry-btn">TRY AGAIN</a>
     
-    <button class="btn-buy" onclick="window.location.href='/DPMasters_Backend/public/checkout.html'" style="max-width: 300px; margin: 0 auto;">Retry Protocol Access</button>
+    <a href="#" class="support-link">Need help? Contact Protocol Support</a>
+</div>
 
 </body>
 </html>

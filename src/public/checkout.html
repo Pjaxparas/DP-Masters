@@ -89,34 +89,83 @@
     </div>
 </div>
 
-<script>
-    // URL se amount lena (Default 49 agar URL mein nahi hai)
+<script type="module">
+    // --- NEW UPDATES START (Adding Firebase without breaking your flow) ---
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+    import { getFirestore, doc, updateDoc } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyAMSB5uI1rY2zEOGTtJN_jgfInPMNm02aA",
+        authDomain: "dp-masters.firebaseapp.com",
+        projectId: "dp-masters",
+        storageBucket: "dp-masters.firebasestorage.app",
+        messagingSenderId: "79554677960",
+        appId: "1:79554677960:web:8766e1485da4bec2b729fd",
+        measurementId: "G-TLS4NQCE6Q"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    // --- NEW UPDATES END ---
+
+    // 1. Data Retrieval (Wahi purana logic)
     const params = new URLSearchParams(window.location.search);
     const amountVal = params.get('amt') || "49"; 
+    const savedName = localStorage.getItem('custName') || "Customer";
+    const savedEmail = localStorage.getItem('custEmail') || "support@dpmasters.com";
+    const savedPhone = localStorage.getItem('custPhone') || "";
+
     document.getElementById('amt').innerText = "₹" + amountVal;
 
-    function startPayment() {
+    // Window function taaki button click par kaam kare
+    window.startPayment = function() {
+        const upiId = document.getElementById('upi-id').value;
+
         var options = {
-            "key": "rzp_live_ScxkGNuA9dLL4b", // <-- YAHAN APNI KEY DAALEIN
-            "amount": parseInt(amountVal) * 49, // Amount in paise
+            "key": "rzp_live_ScxkGNuA9dLL4b", 
+            "amount": parseInt(amountVal) * 100, // Fixed: ₹49.00
             "currency": "INR",
             "name": "DP MASTERS",
-            "description": "Payment for Service",
+            "description": "Personal Protocol Access",
             "image": "https://img.icons8.com/color/48/shield.png",
-            "handler": function (response){
-                // Success hone par action
-                alert("Payment Successful! ID: " + response.razorpay_payment_id);
-                window.location.href = "success.html"; 
+            
+            // Success Handler (Updated with Firebase Status)
+            "handler": async function (response) {
+                try {
+                    const userDocId = localStorage.getItem('lastUserDocId');
+                    if (userDocId) {
+                        const userRef = doc(db, "leads", userDocId);
+                        await updateDoc(userRef, {
+                            status: "SUCCESS",
+                            paymentId: response.razorpay_payment_id
+                        });
+                    }
+                } catch (e) { console.log("DB Update Error: ", e); }
+                
+                window.location.href = "success.html?pay_id=" + response.razorpay_payment_id; 
             },
+
             "prefill": {
-                "vpa": document.getElementById('upi-id').value // UPI ID box se uthayega
+                "name": savedName,
+                "email": savedEmail,
+                "contact": savedPhone,
+                "vpa": upiId 
             },
-            "theme": { "color": "#2563eb" }
+            "theme": { "color": "#000000" },
+            "modal": {
+                "ondismiss": function() {
+                    window.location.href = "failure.html?status=user_cancelled";
+                }
+            }
         };
+
         var rzp1 = new Razorpay(options);
+
+        // Technical failure handling (New Update)
+        rzp1.on('payment.failed', function (response){
+            window.location.href = "failure.html?error=tech_issue";
+        });
+
         rzp1.open();
     }
 </script>
-
-</body>
-</html>
