@@ -51,8 +51,10 @@ app.get('/checkout', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'checkout.html'));
 });
 
-// Express 5+ mein wildcard ko naam dena zaroori hai
-app.get('/*', (req, res) => {
+// Purana galti wala code: app.get('*', ...) ya app.get('/*', ...)
+// Naya sahi code (Express 5+ standard):
+
+app.get('/:any*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
