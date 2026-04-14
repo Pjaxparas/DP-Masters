@@ -51,8 +51,8 @@ app.get('/checkout', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'checkout.html'));
 });
 
-// Catch-all: Kuch bhi aur open ho toh index.html par bhejo
-app.get('*', (req, res) => {
+// Express 5+ mein wildcard ko naam dena zaroori hai
+app.get('/*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
