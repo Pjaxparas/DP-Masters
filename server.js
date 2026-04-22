@@ -54,7 +54,7 @@ app.get('/checkout', (req, res) => {
 // Purana galti wala code: app.get('*', ...) ya app.get('/*', ...)
 // Naya sahi code (Express 5+ standard):
 
-app.get('/:any*', (req, res) => {
+app.get('/*any', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
