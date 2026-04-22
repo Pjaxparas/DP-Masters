@@ -2,64 +2,86 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const Razorpay = require('razorpay');
-require('dotenv').config(); 
+require('dotenv').config();
 
 const app = express();
 
-// Middleware
+// ===== MIDDLEWARE =====
 app.use(cors());
 app.use(express.json());
-// 1. Pehle Express ko bolo ki 'src' folder se files check kare
-// Agar file wahan mil gayi (jaise style.css), toh Express wahi ruk jayega
+
+// ===== STATIC FILES =====
+// Option A: Dono folders ko root (/) se serve karo (simple)
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'src')));
 
-// Sabse Important: Static files ka rasta
-// Maan lo tumhari index.html, checkout.html, sitemap.xml sab 'public' folder mein hain
-app.use(express.static(path.join(__dirname, 'public')));
+// Option B (BETTER): Alag paths se serve karo (conflict avoid karne ke liye)
+// app.use(express.static(path.join(__dirname, 'public')));
+// app.use('/src', express.static(path.join(__dirname, 'src')));
 
-// Razorpay Setup
+// ===== RAZORPAY SETUP =====
 const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID,
-  key_secret: process.env.RAZORPAY_KEY_SECRET,
+    key_id: process.env.RAZORPAY_KEY_ID,
+    key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
 
-// 1. Order ID Generate karne ka route
+// ===== API ROUTES =====
+
+// Razorpay Order Creation
 app.post("/create-order", async (req, res) => {
-  const options = {
-    amount: 4900, // Rs 49 ke liye 4900 (paise)
-    currency: "INR",
-    receipt: "order_rcptid_" + Date.now()
-  };
+    const options = {
+        amount: 4900, // ₹49 in paise
+        currency: "INR",
+        receipt: "order_rcptid_" + Date.now()
+    };
 
-  try {
-    const order = await razorpay.orders.create(options);
-    res.json(order);
-  } catch (error) {
-    console.error("Razorpay Error:", error);
-    res.status(500).json({ error: "Razorpay order fail ho gaya" });
-  }
+    try {
+        const order = await razorpay.orders.create(options);
+        res.json(order);
+    } catch (error) {
+        console.error("Razorpay Error:", error);
+        res.status(500).json({ error: "Razorpay order creation failed" });
+    }
 });
 
-// 2. Sitemap aur Robots Route (Direct path)
-app.get('/sitemap.xml', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'sitemap.xml'));
+// ===== PAGE ROUTES (Clean URLs without .html) =====
+
+// Homepage
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-app.get('/robots.txt', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'robots.txt'));
+// Specific pages (optional - for clean URLs)
+app.get('/login', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'login.html'));
 });
 
-// 3. Page Routes
+app.get('/register', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'register.html'));
+});
+
 app.get('/checkout', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'checkout.html'));
 });
 
-// 2. Baaki saare routes ke liye index.html bhejo (For SPA like React/Vue)
-// Ye tabhi chalega jab upar static folder mein file NAHI milegi
-app.get('/*any', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html')); 
-    // Note: Agar index.html 'src' mein hai toh yahan bhi 'src' likhein
+app.get('/success', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'success.html'));
 });
 
+app.get('/failure', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'failure.html'));
+});
+
+// ===== 404 HANDLER (Catch-all - MUST BE LAST) =====
+app.use((req, res) => {
+    res.status(404).sendFile(path.join(__dirname, 'public', 'index.html'));
+    // Ya agar 404 page alag hai:
+    // res.status(404).sendFile(path.join(__dirname, 'public', '404.html'));
+});
+
+// ===== SERVER START =====
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`SYSTEM LIVE ON PORT ${PORT}`));
+app.listen(PORT, () => {
+    console.log(`🚀 SYSTEM LIVE ON PORT ${PORT}`);
+    console.log(`🌐 http://localhost:${PORT}`);
+});
