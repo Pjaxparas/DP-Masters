@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protocol Access | DP Masters</title>
+    <link rel="stylesheet" href="../src/login.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="login-box">
+        <div class="login-header">
+            <div class="logo">DP <span>MASTERS</span></div>
+            <span class="badge">Security Clearance</span>
+            <h2>Member Access</h2>
+        </div>
+
+        <button class="btn-google" onclick="handleGoogleLogin()">
+           <img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png" alt="Google Logo">
+    Sign in with Google
+        </button>
+    
+
+        <div class="divider"><span>OR</span></div>
+
+        <form onsubmit="handleLogin(event)">
+    <input type="email" id="loginEmail" placeholder="Registered Email" required>
+    <input type="password" id="loginPass" placeholder="Enter Password" required>
+    <button type="submit" class="btn-auth">Login →</button>
+</form>
+        <div class="login-footer">
+            <p>New operative? <a href="register.html">Get Access</a></p>
+        </div>
+    </div>
+
+    <script type="module" src="../src/login-auth.js"></script>
+</body>
+</html>

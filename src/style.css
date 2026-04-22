@@ -1,0 +1,276 @@
+:root { 
+    --black: #050505; 
+    --dark-grey: #121212; 
+    --crimson: #bc0000; 
+    --text-dim: #888; 
+    --text-bright: #fff; 
+}
+
+body { 
+    background-color: var(--black); 
+    color: var(--text-bright); 
+    font-family: 'Inter', sans-serif; 
+    margin: 0; 
+    overflow-x: hidden;
+}
+
+.hero { 
+    text-align: center; 
+    padding: 150px 5%; 
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+h1 { 
+    font-size: 64px; 
+    font-weight: 900; 
+    margin: 0 0 20px 0; 
+    line-height: 1.1; 
+    letter-spacing: -2px;
+}
+
+.red-text { 
+    color: var(--crimson); 
+}
+
+.dim-text { 
+    color: var(--text-dim); 
+    font-size: 18px;
+    margin-bottom: 40px; 
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.btn-buy { 
+    background: var(--crimson); 
+    color: white; 
+    border: none; 
+    width: 100%; 
+    max-width: 300px;
+    padding: 20px; 
+    font-size: 16px;
+    font-weight: 700; 
+    cursor: pointer; 
+    text-transform: uppercase; 
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 20px rgba(188, 0, 0, 0.2);
+}
+
+.btn-buy:hover { 
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(188, 0, 0, 0.4);
+    background: #e60000;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    h1 { font-size: 42px; }
+    .hero { padding: 100px 20px; }
+}
+/* Header Specific Styles */
+.main-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    background: rgba(5, 5, 5, 0.9); /* Semi-transparent black */
+    backdrop-filter: blur(10px); /* Modern blur effect */
+    border-bottom: 1px solid #222;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+}
+
+.header-container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-left { display: flex; align-items: center; gap: 25px; }
+
+/* Hamburger Menu */
+.menu-trigger { cursor: pointer; display: grid; gap: 5px; }
+.menu-trigger .bar { width: 22px; height: 2px; background: #fff; transition: 0.3s; }
+
+.brand-logo { font-weight: 900; font-size: 20px; letter-spacing: -1px; }
+.brand-logo span { color: #bc0000; }
+
+.login-portal-btn {
+    background: transparent;
+    border: 1px solid #bc0000;
+    color: #fff;
+    padding: 8px 18px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.login-portal-btn:hover { background: #bc0000; }
+
+/* Sidebar Styles */
+/* Sidebar Main Container */
+.side-menu {
+    position: fixed;
+    top: 0;
+    left: -320px; 
+    width: 300px;
+    height: 100vh;
+    background: #121212; /* Dark Grey */
+    z-index: 2000;
+    transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border-right: 1px solid #222;
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+/* Sidebar Open State */
+.side-menu.open {
+    left: 0;
+}
+
+/* Sidebar Header (Logo + X Button) */
+.side-menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 50px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #222;
+}
+
+.close-menu {
+    font-size: 30px;
+    cursor: pointer;
+    color: #888;
+    line-height: 1;
+    transition: 0.3s;
+}
+
+.close-menu:hover {
+    color: #bc0000; /* Crimson on hover */
+}
+
+/* Navigation Links - YAHAN GADBAD THI */
+.side-nav-links {
+    display: flex;
+    flex-direction: column; /* Links ko ek ke niche ek lane ke liye */
+}
+
+.side-nav-links a {
+    display: block; /* Pura row click-able banane ke liye */
+    color: #888; /* Grey text, blue nahi */
+    text-decoration: none; /* Underline hatane ke liye */
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 25px; /* Links ke beech gap */
+    transition: 0.3s ease;
+}
+
+.side-nav-links a:hover {
+    color: #fff; /* Hover par white */
+    padding-left: 10px; /* Slight slide effect */
+}
+
+/* Special Support Link */
+.support-link {
+    color: #bc0000 !important; /* Hamesha crimson rahega */
+    margin-top: 20px;
+    border-top: 1px solid #222;
+    padding-top: 20px;
+}
+
+.support-link:hover {
+    color: #fff !important;
+}
+
+.footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 30px;
+    text-align: left;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 150px;
+}
+
+.brand-info {
+    min-width: 200px;
+}
+
+.footer-logo {
+    color: #bc0000; /* var(--crimson) */
+    font-weight: 900;
+    margin: 0 0 10px 0;
+    text-transform: uppercase;
+}
+
+.footer-logo span {
+    color: #fff;
+}
+
+.footer-tagline {
+    font-size: 12px;
+    color: #888; /* var(--text-dim) */
+}
+
+.footer-heading {
+    text-transform: uppercase;
+    font-size: 11px;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+    color: #fff;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    font-size: 13px;
+    line-height: 2;
+}
+
+.footer-links a {
+    color: #888; /* var(--text-dim) */
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.footer-links a:hover {
+    color: #bc0000; /* var(--crimson) */
+}
+
+.footer-bottom {
+    border-top: 1px solid #111;
+    margin-top: 40px;
+    padding-top: 20px;
+    font-size: 10px;
+    color: #444;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+/* Responsiveness */
+@media (max-width: 600px) {
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+    }
+}

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Protocol | DP Masters</title>
+    <link rel="stylesheet" href="../src/login.css"> <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="login-box">
+        <div class="login-header">
+            <div class="logo">DP <span>MASTERS</span></div>
+            <span class="badge">New Operative Registration</span>
+            <h2>Create Account</h2>
+        </div>
+
+        <form id="regForm" onsubmit="handleRegistration(event)">
+    <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" id="regFullName" placeholder="Letters only" required>
+    </div>
+
+    <div class="form-group">
+        <label>Date of Birth</label>
+        <input type="date" id="regDOB" required>
+    </div>
+
+    <div class="form-group">
+        <label>Mobile Number</label>
+        <input type="tel" id="regPhone" placeholder="10 Digits" required>
+    </div>
+
+    <div class="form-group">
+        <label>Authorized Email</label>
+        <input type="email" id="regEmail" placeholder="name@email.com" required>
+    </div>
+
+    <div class="form-group">
+        <label>Set Password</label>
+        <input type="password" id="regPass" placeholder="8+ chars (Mix of A-z, 0-9, @#$)" required>
+    </div>
+
+    <div class="form-group">
+        <label>Confirm Password</label>
+        <input type="password" id="regConfirmPass" placeholder="Repeat password" required>
+    </div>
+
+    <button type="submit" class="btn-auth">Initialize Protocol →</button>
+</form>
+
+        <div class="login-footer">
+            <p>Already a member? <a href="login.html">Login Securely</a></p>
+        </div>
+    </div>
+
+    <script type="module" src="../src/reg-auth.js"></script>
+</body>
+</html>

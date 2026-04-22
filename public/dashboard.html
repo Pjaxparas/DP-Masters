@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | DP Masters Secure Access</title>
+    <link rel="stylesheet" href="../src/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="dashboard-wrapper">
+        <header class="db-header">
+            <div class="logo">DP <span>MASTERS</span></div>
+            <div class="user-status">Protocol: <span class="active-status">Active</span></div>
+        </header>
+        <div class="disclaimer-box">
+           <span class="disclaimer-tag">NOTICE</span>
+            <p class="disclaimer-text">
+             ⚠️ Important: Please complete your payment to unlock the full protocol access. 
+              
+             </p>
+        </div>
+
+        <main class="db-container">
+            <div class="welcome-bar">
+                <h1>Welcome, <span id="userNameDisplay">Member</span></h1>
+                <p class="access-level">Access Level: Beginner Tier</p>
+            </div>
+
+            <div class="content-grid">
+                <div class="db-card">
+                    <div class="card-icon">📄</div>
+                    <h3>Behavioral Protocol</h3>
+                    <p>The core manual for human behavioral analysis.</p>
+                    <a href="checkout.html" class="db-btn">Unlock At Rs 49</a>
+                </div>
+
+                <div class="db-card">
+                    <div class="card-icon">🧠</div>
+                    <h3>Neural Mapping</h3>
+                    <p>Blueprint of environment triggers and responses.</p>
+                    <a href="#" class="db-btn locked">Coming Soon</a>
+                </div>
+
+                <div class="db-card highlight">
+                    <div class="card-icon">🔒</div>
+                    <h3>Video Briefing</h3>
+                    <p>Visual breakdown of high-stakes social heuristics.</p>
+                    <a href="#" class="db-btn locked">Coming Soon</a>
+                </div>
+            </div>
+        </main>
+
+        <footer class="db-footer">
+            <p>© 2026 DP MASTERS | SECURE TERMINAL</p>
+        </div>
+    </div>
+
+    <script type="module">
+        // Page load hote hi local storage se naam uthana
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedName = localStorage.getItem('custName');
+            if (savedName) {
+                document.getElementById('userNameDisplay').innerText = savedName;
+            }
+        });
+    </script>
+</body>
+<footer class="main-footer">
+    <link rel="stylesheet" href="../src/style.css">
+    <div class="footer-container">
+        <div class="footer-section brand-info">
+            <h3 class="footer-logo">DP <span>MASTERS</span></h3>
+            <p class="footer-tagline">Precision. Power. Protocol.</p>
+        </div>
+
+        <div class="footer-section">
+            <h5 class="footer-heading">Resources</h5>
+            <ul class="footer-links">
+                <li><a href="https://instagram.com/your_handle" target="_blank">Instagram</a></li>
+                <li><a href="mailto:support@dpmasters.com">Contact Support</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-section">
+            <h5 class="footer-heading">Legal</h5>
+            <ul class="footer-links">
+                <li>
+                    <a href="Terms and conditions .pdf#toolbar=0" target="_blank">
+                        Terms & Conditions
+                    </a>
+                </li>
+                <li>
+                    <a href="privacy.pdf#toolbar=0" target="_blank">
+                        Privacy Protocol
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        © 2026 DP MASTERS. ALL RIGHTS RESERVED.
+    </div>
+</footer>
+</html>
