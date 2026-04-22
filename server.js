@@ -12,7 +12,8 @@ app.use(express.json());
 
 // Sabse Important: Static files ka rasta
 // Maan lo tumhari index.html, checkout.html, sitemap.xml sab 'public' folder mein hain
-app.use(express.static(path.join(__dirname, 'src')));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('src'));
 
 // Razorpay Setup
 const razorpay = new Razorpay({
