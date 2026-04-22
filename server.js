@@ -9,11 +9,13 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(express.json());
+// 1. Pehle Express ko bolo ki 'src' folder se files check kare
+// Agar file wahan mil gayi (jaise style.css), toh Express wahi ruk jayega
+app.use(express.static(path.join(__dirname, 'src')));
 
 // Sabse Important: Static files ka rasta
 // Maan lo tumhari index.html, checkout.html, sitemap.xml sab 'public' folder mein hain
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static('src'));
 
 // Razorpay Setup
 const razorpay = new Razorpay({
@@ -52,11 +54,11 @@ app.get('/checkout', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'checkout.html'));
 });
 
-// Purana galti wala code: app.get('*', ...) ya app.get('/*', ...)
-// Naya sahi code (Express 5+ standard):
-
+// 2. Baaki saare routes ke liye index.html bhejo (For SPA like React/Vue)
+// Ye tabhi chalega jab upar static folder mein file NAHI milegi
 app.get('/*any', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    res.sendFile(path.join(__dirname, 'index.html')); 
+    // Note: Agar index.html 'src' mein hai toh yahan bhi 'src' likhein
 });
 
 const PORT = process.env.PORT || 3000;
